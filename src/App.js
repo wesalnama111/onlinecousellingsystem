@@ -10,17 +10,7 @@ class App extends Component {
       
     ]
   }
-  SwitchButton=(nName)=>{
-    
-    this.setState({
-       persons:[
-      { Name:'wesal', age:28 },
-      { Name:'linkedIn', age:27 },
-      { Name:'wesalia',age:32 },
-      
-      
-    ]})
-  }
+  
   nameChanger=(event)=>{
     this.setState({
       persons:[
@@ -31,6 +21,12 @@ class App extends Component {
   otherState:'someother values',
   showPersons: false
   })
+  }
+  deletePerson=(personIndex)=>{
+    const persons =this.state.persons;
+    persons.splice(personIndex, 1);
+    this.setState({persons:persons});
+
   }
   togglePerson=()=>{
 
@@ -51,19 +47,13 @@ class App extends Component {
     if (this.state.showPersons){
       person= (
         <div>
-        <Person 
-        Name={this.state.persons[0].Name} 
-        age={this.state.persons[0].age} />
-        <Person 
-        Name={this.state.persons[1].Name}
-        age={this.state.persons[1].age} 
-        click={()=>this.SwitchButton('lasew')}
-        changeto={this.nameChanger}>
-        Hobbies:cricket
-        </Person>
-        <Person 
-        Name={this.state.persons[2].Name} 
-        age={this.state.persons[2].age}/>
+          {this.state.persons.map((persone, index)=>{
+            return  <Person
+            click={this.deletePerson.bind(this, index)}
+             name={persone.name} 
+             age={persone.age}/> 
+            }
+          )}
         
         </div>
       
