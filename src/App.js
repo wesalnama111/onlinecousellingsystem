@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 
 class App extends Component {
@@ -30,20 +31,7 @@ class App extends Component {
     this.setState({ persons: persons });
   }
 
-  nameChanged = ( event, id ) => {
-    const personIndex = this.state.persons.findIndex( p => {
-      return p.id === id;
-    });
-    const person = {
-      ...this.state.persons[personIndex]
-    };
-     // const person=Object.assign({},this.state.persons[personIndex]);
-   
-    person.age= event.target.value;
-    const persons = [...this.state.persons];
-    persons[personIndex] = person;
-    this.setState({ persons: persons });
-  }
+  
   
   // nameChanger = () => {
   //   this.setState ({
@@ -86,42 +74,37 @@ class App extends Component {
         <div>
           {
             this.state.persons.map((persone, index) => {
-              return  <Person
+              return   <ErrorBoundary key = {persone.id}><Person
                         click = {this.deletePerson.bind(this, index)}
                         name = {persone.name} 
                         age = {persone.age}
-                        key = {persone.id}
+                        
                         changed = {(event) => this.nameChange(event, persone.id)}
-                        change = {(event) => this.nameChanged(event, persone.id)}
-                        /> 
+                        /></ErrorBoundary> 
               })}
         </div>
       ) 
       style.backgroundColor='white';
       style.color='black';
-      
-     
     }
-
     const classes = [];
     if(this.state.persons.length <= 2 ){
       classes.push('red');
     }
-
     if(this.state.persons.length <= 1){
       classes.push('bold');
     }
-
+    const rand=Math.random();
+    if(rand > 0.7){
+      throw new Error('something went wrongS');
+    }
     return (
-      
       <div className="App">
         <h1>My first react App</h1>
-        <p className={classes.join(' ')}>it works really fine </p>
+        <p className={classes.join(' ')}>it works really fine OR NOT? </p>
         <button style = {style} onClick = {this.togglePerson}>show the details</button> 
         {person}
-        
       </div>
-      
     );
   // return React.createElement('div', {className:'App'}, React.createElement('h1',null,'does thiswork now'));
   }
