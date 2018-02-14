@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Person/Person';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import Person from '../components/Persons/Person/Person';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 
 class App extends Component {
@@ -58,51 +59,26 @@ class App extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: 'black',
-      font:'inherit',
-      border:'1px solid blue',
-      padding :'8px',
-      cursor:'pointer',
-      color: 'white',
-      
-    }
+    
     let person = null;
     if (this.state.showPersons)
     {
-      person = (
-        <div>
-          {
-            this.state.persons.map((persone, index) => {
-              return   <ErrorBoundary key = {persone.id}><Person
-                        click = {this.deletePerson.bind(this, index)}
-                        name = {persone.name} 
-                        age = {persone.age}
-                        
-                        changed = {(event) => this.nameChange(event, persone.id)}
-                        /></ErrorBoundary> 
-              })}
-        </div>
-      ) 
-      style.backgroundColor='white';
-      style.color='black';
-    }
-    const classes = [];
-    if(this.state.persons.length <= 2 ){
-      classes.push('red');
-    }
-    if(this.state.persons.length <= 1){
-      classes.push('bold');
-    }
-    const rand=Math.random();
-    if(rand > 0.7){
-      throw new Error('something went wrongS');
-    }
+      person = 
+       
+          <Persons
+          persons={this.state.persons}
+          clicked={this.deletePerson}
+          changed={this.nameChange}
+          />;
+     }
+   
+  
     return (
       <div className="App">
-        <h1>My first react App</h1>
-        <p className={classes.join(' ')}>it works really fine OR NOT? </p>
-        <button style = {style} onClick = {this.togglePerson}>show the details</button> 
+      <Cockpit
+      showPersons={this.state.showPersons}
+      persons={this.state.persons}
+      clicked={this.togglePerson}/>
         {person}
       </div>
     );
