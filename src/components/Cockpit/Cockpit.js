@@ -8,15 +8,15 @@ const cockpit = (props) =>{
       btnClass= classes.red;  
     }
     if(props.persons.length <= 2 ){
-      classes.push(classes.red);
+      assignedclasses.push(classes.red);
     }
     if(props.persons.length <= 1){
-      classes.push(classes.bold);
+      assignedclasses.push(classes.bold);
     }
 
     return (
         <div className={classes.Cockpit}>
-        <h1>My first react App</h1>
+        <h1>{props.appTitle}</h1>
         <p className={assignedclasses.join(' ')}>it works really fine OR NOT? </p>
         <button className={btnClass} onClick = {props.clicked}>show the details</button> 
         </div>

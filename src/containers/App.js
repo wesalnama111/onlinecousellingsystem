@@ -1,21 +1,44 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from '../components/Persons/Person/Person';
+//import Person from '../components/Persons/Person/Person';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
 
 class App extends Component {
-  state = {
-    persons:
-    [
-      { id:'1st', name:'max', age:28 },
-      { id:'2nd', name:'menu', age:27 },
-      { id:'3rd', name:'wesal', age:29 } 
-    ],
-    otherState:'someother values',
-    showPersons: false
+  constructor(props){
+    super(props);
+    console.log('[App.js] Inside constructor', props);
+    this.state=  {
+      persons:
+      [
+        { id:'1st', name:'max', age:28 },
+        { id:'2nd', name:'menu', age:27 },
+        { id:'3rd', name:'wesal', age:29 } 
+      ],
+      otherState:'someother values',
+      showPersons: false
+    }
+
+
   }
+  componentWillMount(){
+    console.log('[App.js] Inside componentWillMount');
+
+  }
+  componentDidMount(){
+    console.log('[App.js componentdidmount]')
+  }
+  // state = {
+  //   persons:
+  //   [
+  //     { id:'1st', name:'max', age:28 },
+  //     { id:'2nd', name:'menu', age:27 },
+  //     { id:'3rd', name:'wesal', age:29 } 
+  //   ],
+  //   otherState:'someother values',
+  //   showPersons: false
+  // }
 
   nameChange = ( event, id ) => {
     const personIndex = this.state.persons.findIndex( p => {
@@ -59,6 +82,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('[App.js] Inside render()')
     
     let person = null;
     if (this.state.showPersons)
@@ -76,6 +100,7 @@ class App extends Component {
     return (
       <div className="App">
       <Cockpit
+      appTitle={this.props.title}
       showPersons={this.state.showPersons}
       persons={this.state.persons}
       clicked={this.togglePerson}/>
